@@ -34,7 +34,6 @@ std::string Router::handle(std::string path) {
             int min_price = -1;
             int max_price = -1;
 
-            // Extract query parameters if present
             auto pos = path.find('?');
             if (pos != std::string::npos) {
                 std::string params = path.substr(pos + 1);
@@ -50,7 +49,7 @@ std::string Router::handle(std::string path) {
                         if (key == "query") {
                             query = val;
                         } else if (key == "min_price") {
-                            min_price = std::stoi(val); // still in dollars, handled in SearchEngine
+                            min_price = std::stoi(val);
                         } else if (key == "max_price") {
                             max_price = std::stoi(val);
                         }
@@ -58,7 +57,7 @@ std::string Router::handle(std::string path) {
                 }
             }
 
-            // Call search engine
+            
             auto results = search->query(query, min_price, max_price);
             for (auto &p : results) {
                 response += p.to_string() + "\n";
